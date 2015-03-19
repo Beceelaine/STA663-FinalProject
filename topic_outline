@@ -4,7 +4,12 @@ Outline:
 	
 Definition of Indian Buffet Process (IBP):
 
-In the Indian buffet process, N customers enter a restaurant one after another. Each customer encounters a buffet consisting of infinitely many dishes arranged in a line. The first customer starts at the left of the buffet and takes a serving from each dish, stopping after a Poisson(α) number of dishes. The ith customer moves along the buffet, sampling dishes in proportion to their popularity, taking dish k with probability mk/i , where mk is the number of previous customers who have sampled that dish. Having reached the end of all previous sampled dishes, the ith customer then tries a Poisson(α/i) number of new dishes.
+In the Indian buffet process, N customers enter a restaurant one after another. Each customer encounters a buffet 
++consisting of infinitely many dishes arranged in a line. The first customer starts at the left of the buffet and 
++takes a serving from each dish, stopping after a Poisson(α) number of dishes. The ith customer moves along the buffet, 
++sampling dishes in proportion to their popularity, taking dish k with probability mk/i , where mk is the number of 
++previous customers who have sampled that dish. Having reached the end of all previous sampled dishes, the ith customer 
++then tries a Poisson(α/i) number of new dishes.
 
 Steps:
 
@@ -17,8 +22,3 @@ Steps:
 -Further, to illustrate how IBP can be used as a prior in models for unsupervised learning, we derive and test a linear-Gaussian latent feature model in which the features are binary
 
 -We start with a finite realization and then take the infinite limit
-
-
-
-:i
-
