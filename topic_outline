@@ -1,3 +1,9 @@
+%p run for profiling in python
+Also use JIT
+gperftools
+Prefer Cython instead of C
+
+
 Topic: Infinite Latent Feature Models and the Indian Buffet Process
 
 Outline:
