@@ -1,0 +1,116 @@
+2184313 function calls in 9.094 seconds
+
+   Ordered by: internal time
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+   286528    3.351    0.000    3.351    0.000 {numpy.core._dotblas.dot}
+    35816    1.212    0.000    6.131    0.000 <ipython-input-88-d1ee8a415007>:2(likelihood)
+        1    0.988    0.988    9.094    9.094 <ipython-input-19-5b64a3c9505b>:3(sampler)
+    35816    0.495    0.000    1.086    0.000 linalg.py:455(inv)
+   107448    0.412    0.000    0.758    0.000 twodim_base.py:190(eye)
+   112552    0.355    0.000    0.355    0.000 {numpy.core.multiarray.zeros}
+    35816    0.333    0.000    0.778    0.000 linalg.py:1679(det)
+    35816    0.314    0.000    0.314    0.000 {method 'trace' of 'numpy.ndarray' objects}
+    21332    0.255    0.000    0.255    0.000 {sum}
+    71632    0.189    0.000    0.329    0.000 linalg.py:139(_commonType)
+   112782    0.120    0.000    0.120    0.000 {numpy.core.multiarray.array}
+    71632    0.092    0.000    0.149    0.000 linalg.py:209(_assertNdSquareness)
+   107448    0.090    0.000    0.191    0.000 numeric.py:394(asarray)
+    82361    0.090    0.000    0.090    0.000 {max}
+    35816    0.081    0.000    0.081    0.000 {method 'astype' of 'numpy.generic' objects}
+    10980    0.077    0.000    0.077    0.000 {method 'uniform' of 'mtrand.RandomState' objects}
+    71632    0.075    0.000    0.090    0.000 linalg.py:198(_assertRankAtLeast2)
+   214896    0.070    0.000    0.070    0.000 {issubclass}
+    35816    0.068    0.000    0.068    0.000 {method 'astype' of 'numpy.ndarray' objects}
+    35816    0.060    0.000    0.060    0.000 linalg.py:101(get_linalg_error_extobj)
+   143264    0.057    0.000    0.090    0.000 linalg.py:111(isComplexType)
+    35816    0.057    0.000    0.451    0.000 fromnumeric.py:1225(trace)
+    35816    0.053    0.000    0.120    0.000 linalg.py:106(_makearray)
+    71632    0.038    0.000    0.054    0.000 linalg.py:124(_realType)
+    35816    0.035    0.000    0.035    0.000 linalg.py:219(_assertNoEmpty2d)
+    71732    0.017    0.000    0.017    0.000 {min}
+    71681    0.016    0.000    0.016    0.000 {method 'get' of 'dict' objects}
+    72024    0.015    0.000    0.015    0.000 {len}
+    25000    0.013    0.000    0.013    0.000 {math.factorial}
+    15201    0.013    0.000    0.013    0.000 {range}
+    35865    0.012    0.000    0.012    0.000 {getattr}
+    35816    0.007    0.000    0.007    0.000 {method '__array_prepare__' of 'numpy.ndarray' objects}
+        1    0.006    0.006    0.016    0.016 <ipython-input-15-51bada944323>:2(sampleIBP)
+      343    0.002    0.000    0.002    0.000 {method 'send' of 'zmq.backend.cython.socket.Socket' objects}
+      196    0.002    0.000    0.005    0.000 encoder.py:212(iterencode)
+      300    0.002    0.000    0.028    0.000 iostream.py:207(write)
+     1274    0.001    0.000    0.002    0.000 {method 'sub' of '_sre.SRE_Pattern' objects}
+       49    0.001    0.000    0.002    0.000 uuid.py:101(__init__)
+     1274    0.001    0.000    0.003    0.000 encoder.py:33(encode_basestring)
+       49    0.001    0.000    0.001    0.000 {zmq.backend.cython._poll.zmq_poll}
+       49    0.001    0.000    0.020    0.000 session.py:589(send)
+      196    0.001    0.000    0.007    0.000 __init__.py:193(dumps)
+       49    0.001    0.000    0.001    0.000 {posix.urandom}
+       49    0.001    0.000    0.024    0.000 iostream.py:151(flush)
+       49    0.001    0.000    0.011    0.000 session.py:530(serialize)
+      196    0.001    0.000    0.006    0.000 encoder.py:186(encode)
+      196    0.001    0.000    0.008    0.000 jsonapi.py:31(dumps)
+       49    0.001    0.000    0.003    0.000 uuid.py:579(uuid4)
+      300    0.001    0.000    0.001    0.000 {_codecs.utf_8_decode}
+     1231    0.001    0.000    0.001    0.000 {isinstance}
+      637    0.000    0.000    0.000    0.000 traitlets.py:395(__get__)
+       49    0.000    0.000    0.002    0.000 session.py:515(sign)
+      300    0.000    0.000    0.001    0.000 {method 'decode' of 'str' objects}
+      398    0.000    0.000    0.000    0.000 iostream.py:93(_is_master_process)
+       49    0.000    0.000    0.001    0.000 attrsettr.py:35(__getattr__)
+       49    0.000    0.000    0.000    0.000 session.py:200(extract_header)
+       49    0.000    0.000    0.002    0.000 socket.py:250(send_multipart)
+       49    0.000    0.000    0.000    0.000 {built-in method now}
+       49    0.000    0.000    0.005    0.000 session.py:496(msg)
+      196    0.000    0.000    0.000    0.000 encoder.py:101(__init__)
+      196    0.000    0.000    0.008    0.000 session.py:84(<lambda>)
+      245    0.000    0.000    0.000    0.000 {method 'update' of '_hashlib.HASH' objects}
+      196    0.000    0.000    0.000    0.000 {method 'join' of 'str' objects}
+       49    0.000    0.000    0.000    0.000 {map}
+      349    0.000    0.000    0.001    0.000 iostream.py:102(_check_mp_mode)
+       49    0.000    0.000    0.001    0.000 {hasattr}
+       49    0.000    0.000    0.002    0.000 iostream.py:123(_flush_from_subprocesses)
+       49    0.000    0.000    0.000    0.000 hmac.py:88(copy)
+       49    0.000    0.000    0.005    0.000 session.py:493(msg_header)
+      147    0.000    0.000    0.000    0.000 {method 'encode' of 'unicode' objects}
+      300    0.000    0.000    0.001    0.000 utf_8.py:15(decode)
+      300    0.000    0.000    0.000    0.000 {method 'write' of '_io.StringIO' objects}
+       49    0.000    0.000    0.003    0.000 session.py:441(msg_id)
+       49    0.000    0.000    0.000    0.000 uuid.py:197(__str__)
+       49    0.000    0.000    0.000    0.000 iostream.py:96(_is_master_thread)
+      100    0.000    0.000    0.000    0.000 {numpy.core.multiarray.copyto}
+       49    0.000    0.000    0.000    0.000 iostream.py:238(_flush_buffer)
+       49    0.000    0.000    0.001    0.000 poll.py:77(poll)
+       49    0.000    0.000    0.001    0.000 session.py:195(msg_header)
+      100    0.000    0.000    0.000    0.000 {numpy.core.multiarray.empty}
+       49    0.000    0.000    0.000    0.000 iostream.py:247(_new_buffer)
+      100    0.000    0.000    0.000    0.000 numeric.py:141(ones)
+      147    0.000    0.000    0.000    0.000 {method 'copy' of '_hashlib.HASH' objects}
+       49    0.000    0.000    0.000    0.000 {method 'isoformat' of 'datetime.datetime' objects}
+      196    0.000    0.000    0.000    0.000 hmac.py:83(update)
+       49    0.000    0.000    0.000    0.000 threading.py:1152(currentThread)
+       49    0.000    0.000    0.000    0.000 encoder.py:37(replace)
+       49    0.000    0.000    0.000    0.000 jsonutil.py:102(date_default)
+       49    0.000    0.000    0.000    0.000 {locals}
+       49    0.000    0.000    0.000    0.000 hmac.py:100(_current)
+       49    0.000    0.000    0.000    0.000 {method 'close' of '_io.StringIO' objects}
+       49    0.000    0.000    0.000    0.000 {method 'digest' of '_hashlib.HASH' objects}
+      300    0.000    0.000    0.000    0.000 {time.time}
+      447    0.000    0.000    0.000    0.000 {posix.getpid}
+      100    0.000    0.000    0.000    0.000 {method 'poisson' of 'mtrand.RandomState' objects}
+       49    0.000    0.000    0.000    0.000 hmac.py:119(hexdigest)
+       50    0.000    0.000    0.000    0.000 {method 'gamma' of 'mtrand.RandomState' objects}
+       49    0.000    0.000    0.000    0.000 {method 'hexdigest' of '_hashlib.HASH' objects}
+       98    0.000    0.000    0.000    0.000 {method 'extend' of 'list' objects}
+       49    0.000    0.000    0.000    0.000 threading.py:983(ident)
+       49    0.000    0.000    0.000    0.000 {method 'upper' of 'str' objects}
+       49    0.000    0.000    0.000    0.000 {method 'getvalue' of '_io.StringIO' objects}
+       49    0.000    0.000    0.000    0.000 {method 'count' of 'list' objects}
+       49    0.000    0.000    0.000    0.000 {method 'group' of '_sre.SRE_Match' objects}
+       49    0.000    0.000    0.000    0.000 hmac.py:30(__init__)
+      147    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
+        1    0.000    0.000    9.094    9.094 <string>:1(<module>)
+       49    0.000    0.000    0.000    0.000 {thread.get_ident}
+       49    0.000    0.000    0.000    0.000 {method 'copy' of 'dict' objects}
+       49    0.000    0.000    0.000    0.000 py3compat.py:11(no_code)
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
