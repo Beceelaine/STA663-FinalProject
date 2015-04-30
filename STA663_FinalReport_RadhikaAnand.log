@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  30 APR 2015 02:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  30 APR 2015 15:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**final_report
-(./final_report.tex
+**STA663_FinalReport_RadhikaAnand
+(./STA663_FinalReport_RadhikaAnand.tex
 LaTeX2e <2014/05/01>
 Babel <3.9k> and hyphenation patterns for 78 languages loaded.
 (/usr/local/texlive/2014/texmf-dist/tex/latex/base/article.cls
@@ -215,12 +215,12 @@ Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix
 \c@FancyVerbLine=\count109
 \FV@StepNumber=\count110
 \FV@OutFile=\write3
-) (./final_report.aux
+) (./STA663_FinalReport_RadhikaAnand.aux
 
 LaTeX Warning: Label `lampor' multiply defined.
 
 )
-\openout1 = `final_report.aux'.
+\openout1 = `STA663_FinalReport_RadhikaAnand.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
 LaTeX Font Info:    ... okay on input line 29.
@@ -329,113 +329,110 @@ e
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
 
-Underfull \hbox (badness 10000) in paragraph at lines 44--45
+Underfull \hbox (badness 10000) in paragraph at lines 42--43
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 46--47
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 48--49
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 50--51
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 52--53
+Underfull \hbox (badness 10000) in paragraph at lines 47--49
 
  []
 
 [1
 
 {/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 64.
+Underfull \hbox (badness 10000) in paragraph at lines 57--58
 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 59--60
+
+ []
+
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 73.
 (/usr/local/texlive/2014/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 64.
-
-Underfull \hbox (badness 10000) in paragraph at lines 83--84
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 88--91
-
- []
-
-[2]
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 73.
+ [2]
 Underfull \hbox (badness 10000) in paragraph at lines 92--93
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 97--99
+Underfull \hbox (badness 10000) in paragraph at lines 97--100
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 122--123
+Underfull \hbox (badness 10000) in paragraph at lines 101--102
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 106--108
 
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 127--128
+Underfull \hbox (badness 10000) in paragraph at lines 131--132
 
  []
 
-[4] (./data_files/inversetimes.tex)
+
 Underfull \hbox (badness 10000) in paragraph at lines 136--137
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 138--139
+[4] (./data_files/inversetimes.tex)
+Underfull \hbox (badness 10000) in paragraph at lines 145--146
 
  []
 
-(./likelihood.tex) (./data_files/times_like.tex) (./data_files/times.tex)
+
+Underfull \hbox (badness 10000) in paragraph at lines 147--148
+
+ []
+
+(./data_files/times_like.tex) (./data_files/times.tex)
+Underfull \hbox (badness 10000) in paragraph at lines 164--165
+
+ []
+
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 170--171
-
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 175--176
 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 180--181
+
+ []
+
 [6]
-Underfull \hbox (badness 10000) in paragraph at lines 177--178
+Underfull \hbox (badness 10000) in paragraph at lines 182--183
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 179--180
+Underfull \hbox (badness 10000) in paragraph at lines 184--185
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 181--182
+Underfull \hbox (badness 10000) in paragraph at lines 186--187
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 183--184
+Underfull \hbox (badness 10000) in paragraph at lines 188--189
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 185--186
+Underfull \hbox (badness 10000) in paragraph at lines 190--191
 
  []
 
@@ -443,23 +440,23 @@ Underfull \hbox (badness 10000) in paragraph at lines 185--186
 File: data_files/features.png Graphic file (type png)
 
 <use data_files/features.png>
-Package pdftex.def Info: data_files/features.png used on input line 212.
+Package pdftex.def Info: data_files/features.png used on input line 217.
 (pdftex.def)             Requested size: 460.72124pt x 115.18002pt.
 
 <data_files/data.png, id=42, 867.24pt x 216.81pt>
 File: data_files/data.png Graphic file (type png)
  <use data_files/data.png>
-Package pdftex.def Info: data_files/data.png used on input line 218.
+Package pdftex.def Info: data_files/data.png used on input line 223.
 (pdftex.def)             Requested size: 460.72124pt x 115.18002pt.
 
 <data_files/trace_plots.png, id=43, 722.7pt x 578.16pt>
 File: data_files/trace_plots.png Graphic file (type png)
 
 <use data_files/trace_plots.png>
-Package pdftex.def Info: data_files/trace_plots.png used on input line 227.
+Package pdftex.def Info: data_files/trace_plots.png used on input line 232.
 (pdftex.def)             Requested size: 460.72124pt x 368.57433pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 233--234
+Underfull \hbox (badness 10000) in paragraph at lines 238--239
 
  []
 
@@ -467,16 +464,16 @@ Underfull \hbox (badness 10000) in paragraph at lines 233--234
 File: data_files/figures.png Graphic file (type png)
 
 <use data_files/figures.png>
-Package pdftex.def Info: data_files/figures.png used on input line 238.
+Package pdftex.def Info: data_files/figures.png used on input line 243.
 (pdftex.def)             Requested size: 460.72124pt x 115.18002pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 244--245
+Underfull \hbox (badness 10000) in paragraph at lines 249--250
 
  []
 
 [8 <./data_files/features.png> <./data_files/data.png>] [9 <./data_files/trace_
 plots.png> <./data_files/figures.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 249--251
+Underfull \hbox (badness 10000) in paragraph at lines 254--256
 
  []
 
@@ -485,7 +482,7 @@ File: data_files/detected_features.png Graphic file (type png)
 
 <use data_files/detected_features.png>
 Package pdftex.def Info: data_files/detected_features.png used on input line 25
-3.
+8.
 (pdftex.def)             Requested size: 460.72124pt x 115.18002pt.
 
 <data_files/detected_total_features.png, id=56, 867.24pt x 216.81pt>
@@ -493,49 +490,49 @@ File: data_files/detected_total_features.png Graphic file (type png)
 
 <use data_files/detected_total_features.png>
 Package pdftex.def Info: data_files/detected_total_features.png used on input l
-ine 259.
+ine 264.
 (pdftex.def)             Requested size: 460.72124pt x 115.18002pt.
  [10 <./data_files/detected_features.png> <./data_files/detected_total_features
 .png>]
 (./data_files/table_features.tex)
-<matlab_profile.png, id=62, 712.6625pt x 531.9875pt>
+<matlab_profile.png, id=62, 887.315pt x 338.26375pt>
 File: matlab_profile.png Graphic file (type png)
  <use matlab_profile.png>
-Package pdftex.def Info: matlab_profile.png used on input line 280.
-(pdftex.def)             Requested size: 460.72124pt x 343.92076pt.
+Package pdftex.def Info: matlab_profile.png used on input line 285.
+(pdftex.def)             Requested size: 460.72124pt x 175.63492pt.
 Missing character: There is no â in font cmr10!
 Missing character: There is no € in font cmr10!
 Missing character: There is no ™ in font cmr10!
 
-Underfull \hbox (badness 10000) in paragraph at lines 286--287
+Underfull \hbox (badness 10000) in paragraph at lines 291--292
 
  []
 
-<CRP.png, id=63, 570.13pt x 228.855pt>
-File: CRP.png Graphic file (type png)
- <use CRP.png>
-Package pdftex.def Info: CRP.png used on input line 292.
-(pdftex.def)             Requested size: 460.72124pt x 184.9385pt.
-
-<IBP.png, id=64, 572.1375pt x 142.5325pt>
+<IBP.png, id=63, 572.1375pt x 142.5325pt>
 File: IBP.png Graphic file (type png)
  <use IBP.png>
-Package pdftex.def Info: IBP.png used on input line 298.
+Package pdftex.def Info: IBP.png used on input line 297.
 (pdftex.def)             Requested size: 460.72124pt x 114.77646pt.
- [11] [12 <./matlab_profile.png> <./CRP.png>] [13 <./IBP.png>] [14] (./final_re
-port.aux)
+ [11]
+<CRP.png, id=67, 570.13pt x 228.855pt>
+File: CRP.png Graphic file (type png)
+ <use CRP.png>
+Package pdftex.def Info: CRP.png used on input line 303.
+(pdftex.def)             Requested size: 460.72124pt x 184.9385pt.
+ [12 <./matlab_profile.png> <./IBP.png>] [13 <./CRP.png>] (./STA663_FinalReport
+_RadhikaAnand.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 4775 strings out of 493117
- 70560 string characters out of 6135433
- 151941 words of memory out of 5000000
+ 4772 strings out of 493117
+ 70688 string characters out of 6135433
+ 151936 words of memory out of 5000000
  8156 multiletter control sequences out of 15000+600000
  11142 words of font info for 40 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,8n,38p,818b,328s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,8n,38p,1028b,298s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
@@ -551,10 +548,11 @@ e/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive
 /2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2
 014/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/20
 14/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on final_report.pdf (14 pages, 456096 bytes).
+Output written on STA663_FinalReport_RadhikaAnand.pdf (13 pages, 569869 bytes).
+
 PDF statistics:
- 127 PDF objects out of 1000 (max. 8388607)
- 79 compressed objects within 1 object stream
+ 124 PDF objects out of 1000 (max. 8388607)
+ 77 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  46 words of extra memory for PDF output out of 10000 (max. 10000000)
 

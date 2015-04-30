@@ -29,6 +29,7 @@ M1=np.linalg.inv((np.dot(Z[:,0:K_plus].T,Z[:,0:K_plus]) + np.dot(((sigma_X)**2/(
 M2=np.linalg.inv((np.dot(Z[:,0:K_plus].T,Z[:,0:K_plus]) + np.dot(((sigma_X)**2/(sigma_A)**2),np.eye(K_plus))))
 M=np.linalg.inv((np.dot(Z[:,0:K_plus].T,Z[:,0:K_plus]) + np.dot(((sigma_X)**2/(sigma_A)**2),np.eye(K_plus))))
 
+#timing the likelihoods
 t0=time.time()
 for i in range(1000):
     likelihood(X, Z[:,0:K_plus], sigma_A, sigma_X, K_plus, num_objects, object_dim)
@@ -45,6 +46,7 @@ elapsed2=t1-t0
 elap=np.array((elapsed1,elapsed2))
 print elap
 
+#making table
 index=['Old Likelihood','New Likelihood']
 columns=['Time (in secs)']
 

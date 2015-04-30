@@ -20,25 +20,4 @@
     35816    0.081    0.000    0.081    0.000 {method 'astype' of 'numpy.generic' objects}
     10980    0.077    0.000    0.077    0.000 {method 'uniform' of 'mtrand.RandomState' objects}
     71632    0.075    0.000    0.090    0.000 linalg.py:198(_assertRankAtLeast2)
-   214896    0.070    0.000    0.070    0.000 {issubclass}
-    35816    0.068    0.000    0.068    0.000 {method 'astype' of 'numpy.ndarray' objects}
-    35816    0.060    0.000    0.060    0.000 linalg.py:101(get_linalg_error_extobj)
-   143264    0.057    0.000    0.090    0.000 linalg.py:111(isComplexType)
-    35816    0.057    0.000    0.451    0.000 fromnumeric.py:1225(trace)
-    35816    0.053    0.000    0.120    0.000 linalg.py:106(_makearray)
-    71632    0.038    0.000    0.054    0.000 linalg.py:124(_realType)
-    35816    0.035    0.000    0.035    0.000 linalg.py:219(_assertNoEmpty2d)
-    71732    0.017    0.000    0.017    0.000 {min}
-    71681    0.016    0.000    0.016    0.000 {method 'get' of 'dict' objects}
-    72024    0.015    0.000    0.015    0.000 {len}
-    25000    0.013    0.000    0.013    0.000 {math.factorial}
-    15201    0.013    0.000    0.013    0.000 {range}
-    35865    0.012    0.000    0.012    0.000 {getattr}
-    35816    0.007    0.000    0.007    0.000 {method '__array_prepare__' of 'numpy.ndarray' objects}
-        1    0.006    0.006    0.016    0.016 <ipython-input-15-51bada944323>:2(sampleIBP)
-      343    0.002    0.000    0.002    0.000 {method 'send' of 'zmq.backend.cython.socket.Socket' objects}
-      196    0.002    0.000    0.005    0.000 encoder.py:212(iterencode)
-      300    0.002    0.000    0.028    0.000 iostream.py:207(write)
-     1274    0.001    0.000    0.002    0.000 {method 'sub' of '_sre.SRE_Pattern' objects}
-       49    0.001    0.000    0.002    0.000 uuid.py:101(__init__)
-     1274    0.001    0.000    0.003    0.000 encoder.py:33(encode_basestring)
+  

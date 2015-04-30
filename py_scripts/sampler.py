@@ -8,6 +8,7 @@ from likelihood import likelihood
 np.random.seed(1)
 
 def sampler(X, E, BURN_IN, SAMPLE_SIZE, sigma_A, sigma_X, alpha, object_dim, num_objects):
+    """Gibbs and MH combined sampler, optimized"""
     HN=0.0
     for i in range(1,num_objects+1): 
         HN=HN+1.0/i
@@ -37,7 +38,7 @@ def sampler(X, E, BURN_IN, SAMPLE_SIZE, sigma_A, sigma_X, alpha, object_dim, num
             chain_sigma_A[s_counter]=sigma_A
             chain_alpha[s_counter]=alpha
             s_counter=s_counter+1
-
+        #gibbs
         for i in range(num_objects):
             for k in range(K_plus):
                 if (k+1)>K_plus:
@@ -64,7 +65,7 @@ def sampler(X, E, BURN_IN, SAMPLE_SIZE, sigma_A, sigma_X, alpha, object_dim, num
 
             trun=np.zeros(5) 
             alpha_N = alpha/num_objects
-
+            #new dishes
             for k_i in range(5):
                 if Z.shape[1]>(K_plus+k_i):
                     Z[i,K_plus:(K_plus+k_i)]=1       
@@ -96,7 +97,7 @@ def sampler(X, E, BURN_IN, SAMPLE_SIZE, sigma_A, sigma_X, alpha, object_dim, num
 
             Z=Ztemp
             K_plus = K_plus + new_dishes
-
+        #metropolis
         l_curr=likelihood(X, Z[:,0:(K_plus+new_dishes)], sigma_A, sigma_X, K_plus+new_dishes, num_objects, object_dim)
         if np.random.uniform(0,1,1)<.5:
             pr_sigma_X=sigma_X-np.random.uniform(0,1,1)/20

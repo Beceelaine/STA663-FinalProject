@@ -32,6 +32,8 @@ while dish<num_objects:
 
 M=np.linalg.inv(np.dot(Z[:,0:K_plus].T,Z[:,0:K_plus])+((sigma_X/sigma_A)**2)*np.identity(K_plus))
 
+#UNIT TESTING
+
 #calcInverse
 def test1():
     inv=np.dot(Z[:,0:K_plus].T,Z[:,0:K_plus])+((sigma_X/sigma_A)**2)*np.identity(K_plus)

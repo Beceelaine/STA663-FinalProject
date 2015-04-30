@@ -1,26 +1,24 @@
 \relax 
 \@writefile{toc}{\contentsline {section}{\numberline {1}Background}{1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Definition of the Indian Buffet Process}{1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Steps}{1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}The Indian Buffet Process}{1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Applications}{2}}
 \@writefile{toc}{\contentsline {section}{\numberline {2}Implementation}{2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Infinite Linear-Gaussian Binary Latent Feature Model}{2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Algorithm}{2}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.1}Likelihood}{2}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.2}Gibbs Sampler}{2}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.3}Metropolis Hastings}{3}}
-\@writefile{toc}{\contentsline {section}{\numberline {3}Profiling and Optimization}{3}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.1}Likelihood}{3}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.2}Gibbs Sampler}{3}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.3}Metropolis Hastings}{4}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Profiling and Optimization}{4}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Optimizing Matrix Inverse}{5}}
 \@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Runtimes for inverse functions (for 1000 loops) \relax }}{5}}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{inversetimes}{{1}{5}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Optimizing Likelihood Function and the Sampler}{5}}
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Runtimes for likelihood function (for 1000 loops) \relax }}{5}}
-\newlabel{time_likeli}{{2}{5}}
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Runtimes for likelihood function (for 1000 loops) \relax }}{6}}
-\newlabel{time_like}{{3}{6}}
+\newlabel{time_like}{{2}{5}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Total runtimes \relax }}{6}}
+\newlabel{time}{{3}{6}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Cythonizing}{6}}
-\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Total runtimes \relax }}{6}}
-\newlabel{time}{{4}{6}}
 \@writefile{toc}{\contentsline {section}{\numberline {4}High Performance Computing}{6}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Multicore Programming}{6}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}GPU Programming}{6}}
@@ -43,19 +41,20 @@
 \newlabel{fig:da}{{6}{10}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.2}Detection of latent features present in each object and Object Reconstruction}{10}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.3}Validation}{10}}
-\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Presence/absence of latent features in the simulated data. 1 denotes presence, 0 denotes absence. F1, F2, F3, F4 refer to the 4 features as in Figure 1\hbox {} \relax }}{11}}
-\newlabel{featu}{{5}{11}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Presence/absence of latent features in the simulated data. 1 denotes presence, 0 denotes absence. F1, F2, F3, F4 refer to the 4 features in Figure 1\hbox {} (in that oreder) \relax }}{11}}
+\newlabel{featu}{{4}{11}}
 \@writefile{toc}{\contentsline {section}{\numberline {7}Comparison}{11}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Comparison with MATLAB implementation}{11}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Comparison with Chinese Restaurant Process}{11}}
 \@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Profiling results of matlab code for IBP\relax }}{12}}
 \newlabel{fig:matlab}{{7}{12}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Chinese Restaurant Process\relax }}{12}}
-\newlabel{fig:CRP}{{8}{12}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Indian Buffet Process\relax }}{13}}
-\newlabel{fig:IBP}{{9}{13}}
-\@writefile{toc}{\contentsline {section}{\numberline {8}Conclusion}{13}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Indian Buffet Process\relax }}{12}}
+\newlabel{fig:IBP}{{8}{12}}
 \bibcite{lampor}{1}
 \bibcite{lampo94}{2}
 \bibcite{lampor94}{3}
 \bibcite{lampor}{4}
+\bibcite{lamprror}{5}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Chinese Restaurant Process\relax }}{13}}
+\newlabel{fig:CRP}{{9}{13}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Conclusion}{13}}

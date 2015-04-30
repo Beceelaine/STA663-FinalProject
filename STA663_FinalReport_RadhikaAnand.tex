@@ -34,28 +34,37 @@
 \maketitle
 
 \section{Background}
-\subsection{Definition of the Indian Buffet Process}
 
-In the Indian buffet process, N customers enter a restaurant one after another. Each customer encounters a buffet consisting of infinitely many dishes arranged in a line. The first customer starts at the left of the buffet and takes a serving from each dish, stopping after a Poisson($\alpha$) number of dishes. The ith customer moves along the buffet, sampling dishes in proportion to their popularity, taking dish k with probability $mk/i$ , where mk is the number of previous customers who have sampled that dish. Having reached the end of all previous sampled dishes, the ith customer then tries a Poisson($\alpha$/$i$) number of new dishes.
+The Indian Buffet process is very interesting in its approach to model objects using Bayesian Non-Parametrics, assuming the true dimensionality is unbounded. This concept is new to me and very intriguing at the same time. Statistical models exist, that provide latent structure in probabilistic models, but the critical question is the unknown dimesnionality of the representation, i.e. how many features are required to express the latent structure. Bayesian Non-Parametrics is an answer to this question. One way is to use the Chinese Restaurant Process which assigns each object to only one feature/class of the infinite array of features. The Indian Buffet Process extends this problem through its potential to assign an object (customer) to multiple features (dishes) [1]. As an example, we would prefer characterizing a person as married, atheist, female and democrat rather than simply assigning the person to one class.
 
+\subsection{The Indian Buffet Process}
 
-\subsection{Steps}
+The name Indian buffet process is derived from Indian restaurants in London that offer buffets with nearly infinite number of dishes. Formally, in the IBP, N customers enter a restaurant one after the other. Each customer encounters a buffet consisting of infinitely many dishes arranged in a line. The first customer starts at the left of the buffet and takes a serving from each dish, stopping after a Poisson($\alpha$) number of dishes. The $i^{th}$ customer moves along the buffet, sampling dishes in proportion to their popularity, picking dish \textit{k} with probability $m_{k}/i$ , where $m_{k}$ is the number of previous customers who have sampled that dish. Reaching the end of all previous sampled dishes, the $i^{th}$ customer then samples a Poisson($\alpha$/$i$) number of new dishes. We indicate which customers choose which dishes using a binary matrix Z with N rows and infinite columns. $z_{ik}$ is 1 if the $i^{th}$ customer samples the $k^{th}$ dish [1].\\ 
 
-1) Start by defining a probability distribution over equivalence classes of binary matrices with a finite number of rows and an unbounded number of columns. This distribution is suitable for use as a prior in probabilistic models that represent objects using a potentially infinite array of features\\
+Formally, $Z \sim IBP(\alpha)$ as:
+\begin{equation}
+P(Z|\alpha) =\frac{\alpha^{K_+}}{\prod_{i=1}^{N}K_1^{(i)}!}exp(-\alpha H_N)\prod_{k=1}^{K_+}\frac{(N-m_k)!(m_k-1)!}{N!} 
+\end{equation}
+where, $m_{k}$ is the number of objects with feature \textit{k}, $K_1^{(i)}$ is the number of new dishes sampled by the $i^{th}$ customer and $H_N$ is the Nth harmonic number given by $H_N=\sum_{j=1}^{N} 1/j$.\\
 
-2) Next we see that the Indian Buffet Process is a simple generative process that results in the same distribution (as described in previous step) over equivalence classes because IBP has finite number of objects (people) and infinite number of features (dishes)\\
+In conditional probability terms (after taking the infinite limit), this can be expressed as:
+$$
+P(z_{ik}=1|\textbf{z}_{-i,k}) = \frac{m_{-i,k}}{N}
+$$
+where, ${z}_{-i,k}$ is the set of assignments of other objects, not including \textit{i}, for feature \textit{k}, and ${m}_{-i,k}$ is the number of objects possessing feature \textit{k}, not including \textit{i}.
 
-3) We then define a Gibbs Sampler for models using this concept of IBP\\
+\subsection{Applications}
+The Indian Buffet Process has a myriad of applications in Bayesian Non-Parametrics for latent feature allocation. It can be used to define a prior distribution in any setting where the latent structure in the data can be expressed as a binary matrix with a finite number of rows and infinite number of columns, such as the adjacency matrix of a bipartite graph where one class of nodes is of unknown size, or the adjacency matrix for a Markov process with an unbounded set of states [1].\\
 
-4) Further, to illustrate how IBP can be used as a prior in models for unsupervised learning, we derive and test a linear-Gaussian latent feature model in which the features are binary\\
+One application is to use it as a prior in infinite latent feature models. An example is shown in our paper below where we model a noisy image dataset to detect its underlying features. Another example is proposed by Jacob and Yildirim [5], where they apply IBP to unsupervised multisensory perception.\\
 
-5) We start with a finite realization and then take the infinite limit\\
+Despite the far-reaching advantages of IBP, a technical issue arises in models where feature values have to be represented explicitly and the structure of the model does not permit the use of conjugate priors. Care has to be taken that the posterior distributions remain proper [1].
 
 \section{Implementation}
 We illustrate how IBP can be used as a prior in models for unsupervised learning by deriving and testing an infinite Gaussian binary latent feature model, presented in Griffiths and Ghahramani (2005) [1] with further implementation in Yildirim (2012) [3].
 
 \subsection{Infinite Linear-Gaussian Binary Latent Feature Model} 
-In this model, we consider a binary feature ownership matrix Z which illustrates the presence or absence of underlying features in the objects X. The D-dimensional vector of properties of an object i, $x_{i}$ is generated as $x_{i} \sim N(z_{i}A, \Sigma_{X})$, where A is a KxD matrix of weights, K represents the underlying latent features and $\Sigma_{X}=\sigma_{x}^2I$ introduces the white noise.
+In this model, we consider a binary feature ownership matrix Z which illustrates the presence or absence of underlying features in the objects X. The D-dimensional vector of properties of an object \textit{i}, $x_{i}$ is generated as $x_{i} \sim N(z_{i}A, \Sigma_{X})$, where A is a KxD matrix of weights, K represents the underlying latent features and $\Sigma_{X}=\sigma_{X}^2I$ introduces the white noise.
 
 \subsection{Algorithm}
 We use a combination of Gibbs Sampling and Metropolis Hastings to update the parameters of interest, which are:
@@ -64,7 +73,7 @@ We use a combination of Gibbs Sampling and Metropolis Hastings to update the par
   \item Z - Feature ownership matrix
   \item $K_{newdishes}$ - New dishes/features sampled
   \item $\alpha$ - Poisson parameter
-  \item $\sigma_{X}$ - Parameter for X
+  \item $\sigma_{X}$ - Noise parameter for X
   \item $\sigma_{A}$ - Parameter for weight matrix A
 \end{itemize}
 
@@ -101,7 +110,7 @@ $$\\
 $$
 P(\alpha|Z) \sim Gamma(1+K_+, 1+H_N)
 $$
-where $H_N$ is the Nth harmonic number given by $H_N=\sum_{j=1}^{N} 1/j$ and $K_{+}$ is the current number of features.
+where, $H_N$ is the Nth harmonic number given by $H_N=\sum_{j=1}^{N} 1/j$ and $K_{+}$ is the current number of features.
 
 \subsubsection{Metropolis Hastings}
 
@@ -119,12 +128,12 @@ AP = min\{1,\frac{P(X|Z, \sigma_X^{*}, \sigma_A)}{P(X|Z, \sigma_X,\sigma_A)}\}\\
 Similarly for $\sigma_A^{*}$.
 
 \section{Profiling and Optimization}
-We profiled the basic version of the code to find the functions or parts of code taking significant amounts of time. The results of the profiler are shown below. We clearly see that the functions; sampler, likelihood and inverse take the maximum amount of time.\\
+The basic code was written in Python using package \textit{numpy}. We profiled the basic version of the code to find the functions or parts of code taking significant amounts of time. The results of the profiler are shown below. We clearly see that the functions; sampler, likelihood and inverse take the maximum amount of time along with matrix multiplication (\textit{np.dot}).\\
 
 \VerbatimInput{profiling.txt}
 
 \subsection{Optimizing Matrix Inverse}
-We began by optimizing the matrix inverse function. We used the inverse method descibed in Griffiths and Ghahramani (2005) [1], eqns. 51-54, to code an inverse function which involved only rank 1 updates instead of full rank updates. We can see in Table \ref{inversetimes} that this \textit{calcInverse} takes nearly half the time taken by the \textit{linalg.inv} function in python (tested for 1000 iterations). But while running this in our code we could not obtain a stable Markov Chain since this inverse is just a numerical approximation and accumulates numerical errors on the way. We, hence, used the basic python function itself.\\
+We began by optimizing the matrix inverse function. We used the inverse method descibed in Griffiths and Ghahramani (2005) [1], eqns. 51-54, to code an inverse function which involved only rank 1 updates instead of full rank updates. We can see in Table \ref{inversetimes} that this \textit{calcInverse} takes nearly half the time taken by the \textit{np.linalg.inv} function in python (tested for 1000 iterations). But while running this in our code we could not obtain a stable Markov Chain since this inverse is just a numerical approximation and accumulates numerical errors on the way. We, hence, used the basic python function itself.\\
 
 \begin{table}[ht]
 \centering
@@ -133,17 +142,11 @@ We began by optimizing the matrix inverse function. We used the inverse method d
 \end{table}
 
 \subsection{Optimizing Likelihood Function and the Sampler}
-In the basic version of the code, we had a few redundant calculations in the likelihood function. We calculated the inverse of $Z^TZ+\frac{\sigma_X^2}{\sigma_A^2}I$ matrix in the sampler each time before sending it to the likelihood function. Then in the likelihood function we have determinant of this same matrix, $Z^TZ+\frac{\sigma_X^2}{\sigma_A^2}I$. To get rid of the redundancy, we remove all inverse calculations outside the likelihood function and instead just calculate $Z^TZ+\frac{\sigma_X^2}{\sigma_A^2}I$ once in the likelihood function and then take its inverse and determinant. This reduced the time taken by the likelihood function by about half as can be seen in Table \ref{time_likeli} and Table \ref{time_like}.\\
+In the basic version of the code, we had a few redundant calculations in the likelihood function. We calculated the inverse of $Z^TZ+\frac{\sigma_X^2}{\sigma_A^2}I$ matrix in the sampler each time before sending it to the likelihood function. Then in the likelihood function we had determinant of this same matrix, $Z^TZ+\frac{\sigma_X^2}{\sigma_A^2}I$. To get rid of the redundancy, we removed all inverse calculations outside the likelihood function and instead just calculated $Z^TZ+\frac{\sigma_X^2}{\sigma_A^2}I$ once in the likelihood function and then took its inverse and determinant. This reduced the time taken by the likelihood function as can be seen in Table \ref{time_like}. The gain does not appear very significant here but is indeed high when seen together with the sampler.\\
 
-Next, we vectorized a basic loop inside the sampler and got rid of redundant if-else statements. Thereafter, we could not find scope for more vectorization or basic optimization.\\
+We also vectorized a basic loop inside the sampler and got rid of redundant if-else statements. Thereafter, we could not find scope for more vectorization or basic optimization.\\
 
-Finally, Table \ref{time} shows the total runtimes for 1000 iterations of the sampler. We see that there is a significant decrease in the time taken by the optimized version compared to the naive one.
-
-\begin{table}[ht]
-\centering
-\caption{Runtimes for likelihood function (for 1000 loops) \label{time_likeli}}
-\input{likelihood}
-\end{table}
+Finally, Table \ref{time} shows the total runtimes for 1000 iterations of this optimized sampler (together with the optimized likelihood). We see that there is a significant decrease in the time taken by the optimized version compared to the naive one.
 
 \begin{table}[ht]
 \centering
@@ -151,14 +154,16 @@ Finally, Table \ref{time} shows the total runtimes for 1000 iterations of the sa
 \input{data_files/times_like}
 \end{table}
 
-\subsection{Cythonizing}
-To further optimize the code, we cythonized the optimized likelihood function. From Table \ref{time}, we see that the optimization gain by cythonizing is not much.
-
 \begin{table}[ht]
 \centering
 \caption{Total runtimes \label{time}}
 \input{data_files/times}
 \end{table}
+
+\subsection{Cythonizing}
+To further optimize the code, we cythonized the optimized likelihood function. From Table \ref{time}, we see that the optimization gain by cythonizing is not much (infact the run time for cython version is unstable, sometimes slightly higher than the optimimized version and sometimes lower). This is not too surprising because all our codes are already written using the \textit{numpy} package which is inherently coded in C.\\
+
+NOTE: I also tried Just-In-Time compilation but it did not help. Code is present in the repository (results not included here).
 
 \section{High Performance Computing}
 We tried multicore programming and GPU programming to further reduce the total run times.
@@ -167,9 +172,9 @@ We tried multicore programming and GPU programming to further reduce the total r
 The MCMC sampler is serially dependent in its iterations and hence it is not the best idea to parallelize it. But we saw that the sampler stabilized in around 200 iterations and hence instead of running 1000 iterations on the same core we ran 2 chains of 500 each on 2 cores. The combined samples (after burn-in on each core) would not satisfy the Markov property in the theoretical sense of it but would still help us approximate the posterior distributions correctly since both the chains were stable. This reduced the run-time slightly but not significantly, as we also had to take care of multiple burn-ins and multicore overhead. Further, splitting a single chain likelihood calculation into multiple cores is not an option for us since we are calculating the density only at 2 discrete points. 
 
 \subsection{GPU Programming}
-Next we looked at using CuBLAS library from the CUDA package to optimize the matrix multiplications but since we are working with relatively small matrices the overhead was very large and the basic matrix multiplication function \textit{np.dot} was found to be faster than CuBLAS matrix multiplication.\\
+Next, we used CuBLAS library from the CUDA package to optimize the matrix multiplications but since we are working with relatively small matrices the overhead was very large and the basic matrix multiplication function \textit{np.dot} was found to be faster than CuBLAS matrix multiplication.\\
 
-Thus, we use the optimized likelihood and sampler described in Section 3.2 as the final version.
+Thus, we use the optimized likelihood and sampler described in Section 3.2 as the final version. In the comparison section 7.1, we see how this code is faster and more efficient compared to available IBP codes online.
 
 \section{Unit Testing}
 We create several unit tests (refer unit\_tests.py file) to test the various functions we have used in the code. All the tests pass. They are:\\
@@ -184,7 +189,7 @@ We create several unit tests (refer unit\_tests.py file) to test the various fun
 
 5) Test if the likelihood throws an error if we pass negative values for parameters $\sigma_{X}$ and $\sigma_{A}$, as they have to be positive\\
 
-6) Test if each object sampled atleast one feature 
+6) Test if each object sampled atleast one feature (which it is supposed to), finally
 
 \section{Application and Results}
 We simulate a basic dataset and present and validate our results below.
@@ -206,7 +211,7 @@ Thus we simulate 100, 6x6 images represented as a 100*36 matrix where each image
   \item A is a KxD matrix of weights
 \end{itemize}
 
-Figure \ref{fig:feat} shows the 4 features (basis images) used to generate our simlated data and Figure \ref{fig:dataaa} shows first four of the 100 simulated images which have one or more of the features and added noise. 
+Figure \ref{fig:feat} shows the 4 features (basis images) used to generate our simulated data and Figure \ref{fig:dataaa} shows first four of the 100 simulated images which have one or more of the features and added noise. 
 
 \begin{figure}
 \includegraphics[width=\linewidth]{data_files/features.png}
@@ -232,7 +237,7 @@ We ran our code for 1000 iterations of the sampler to get convergence to the tru
 \subsubsection{Detection of total number of latent features}
 In Figure \ref{fig:figur} (a), we see that the mode of K is around six because the samples tended to include the four features used by a large number of images/objects and then a few features used by one one or two objects (which came in the form of added noise). Figure \ref{fig:figur} (b) shows the mean frequency with which objects tended to possess the features. We clearly see that most of the objects possessed only features 1, 2, 3 and 4. The extra features (5, 6 etc.) are possesed by very few objects which confirms that they are because of noise and not actual features.\\
 
-We, thus, conclude the posterior of K to be 4, i.e. our code detected 4 latent features to be present in the data, which is as we would expect because we used 4 features to simulate the data in the beginning.
+We, thus, conclude the posterior mean of K to be 4, i.e. our code detected 4 latent features to be present in the data, which is as we would expect because we used 4 features to simulate the data in the beginning.
 
 \begin{figure}
 \includegraphics[width=\linewidth]{data_files/figures.png}
@@ -241,13 +246,13 @@ We, thus, conclude the posterior of K to be 4, i.e. our code detected 4 latent f
 \end{figure}
 
 \subsubsection{Detection of latent features present in each object and Object Reconstruction}
-Figure \ref{fig:dat} shows the four most frequent features after the 1000 iterations of the sampler. We see that these features are the same as the features used to simulate the data as in Figure \ref{fig:feat}. They are just re-ordered.\\
+Figure \ref{fig:dat} shows the four most frequent features detected after the 1000 iterations of the sampler. We see that these features are the same as the features used to simulate the data as in Figure \ref{fig:feat}. They are just re-ordered.\\
 
-Next, we recontruct the images using $X_{i} \sim N(Z_{i}A,0)$, where the posterior mean of the feature weights A, given X and posterior means of Z, $\sigma_{A}$ and $\sigma_{X}$ is:
+Next, we recontruct the images using $X_{i} \sim N(Z_{i}A,0)$, where the posterior mean of the feature weights matrix A, given X and posterior means of Z, $\sigma_{A}$ and $\sigma_{X}$ is:
 \[
 E[A|X,Z] = (Z^TZ+\frac{\sigma_X^2}{\sigma_A^2}I)^{-1}Z^TX
 \]
-Figure \ref{fig:da} shows the posterior means of the reconstructions of the four original data images as in Figure \ref{fig:dataaa}. The reconstructions provided by the model in Figure \ref{fig:da} clearly pick out the relevant features present in each image, despite the high level of noise as seen in Figure \ref{fig:dataaa}.\\
+Figure \ref{fig:da} shows the posterior means of the reconstructions of the four original data images. The reconstructions provided by the model in Figure \ref{fig:da} clearly pick out the relevant features present in each image, despite the high level of noise as seen in Figure \ref{fig:dataaa}.\\
 
 \begin{figure}
 \includegraphics[width=\linewidth]{data_files/detected_features.png}
@@ -266,7 +271,7 @@ To check the validity, Table \ref{featu} shows the features initially present (u
 
 \begin{table}[ht]
 \centering
-\caption{Presence/absence of latent features in the simulated data. 1 denotes presence, 0 denotes absence. F1, F2, F3, F4 refer to the 4 features as in Figure \ref{fig:feat} \label{featu}}
+\caption{Presence/absence of latent features in the simulated data. 1 denotes presence, 0 denotes absence. F1, F2, F3, F4 refer to the 4 features in Figure \ref{fig:feat} (in that oreder) \label{featu}}
 \input{data_files/table_features}
 \end{table}
 
@@ -274,7 +279,7 @@ To check the validity, Table \ref{featu} shows the features initially present (u
 We compare our algorithm with an implementation of the same algorithm in MATLAB. We also contrast our algorithm to another similar problem called Chinese Restaurant Process.
 
 \subsection{Comparison with MATLAB implementation}
-We compare our code and results to the MATLAB implementation of Indian Buffet Process provided by Yildirim [3]. The dataset he uses is the same as the one we have used. We got exactly similar results in terms of the features detected (Figure \ref{fig:dat}) and the reconstructed images (Figure \ref{fig:da}). We then profiled his MATLAB code and got results as shown in Figure \ref{fig:matlab}. We can see that the time taken for 1000 iterations of the sampler in MATLAB is 410 seconds which is significantly larger than the time taken by our most optimized version i.e. 285 seconds (see Table \ref{time}). Therefore, even though we have a lot of matrix calculations and MATLAB is the suited platform to run matrix intensive codes, we are able to write a much more efficient code in Python.
+We compare our code and results to the MATLAB implementation of Indian Buffet Process provided by Yildirim [3]. The dataset he uses is the same as the one we have used. We got exactly similar results in terms of the features detected (Figure \ref{fig:dat}) and the reconstructed images (Figure \ref{fig:da}). We then profiled his MATLAB code and got results as shown in Figure \ref{fig:matlab}. We can see that the time taken for 1000 iterations of the sampler in MATLAB is 410 seconds which is significantly larger than the time taken by our most optimized version i.e. about 300 seconds (see Table \ref{time}). Therefore, even though we have a lot of matrix calculations and MATLAB is the suited platform to run matrix intensive codes, we are able to write a much more efficient code in Python.
 
 \begin{figure}
 \includegraphics[width=\linewidth]{matlab_profile.png}
@@ -285,14 +290,8 @@ We compare our code and results to the MATLAB implementation of Indian Buffet Pr
 \subsection{Comparison with Chinese Restaurant Process}
 Chinese Restaurant Process is an algorithm of customers’ seating in a Chinese Restaurant with infinite tables and infinite seats in each table. The customers enter one after the other and choose a table at random. In the CRP with parameter $\alpha$, each customer chooses an occupied table with probability proportional to the number of occupants and chooses the next vacant table with probability $\alpha$.\\
 
-Both IBP and CRP model latent features and allow for infinite features but solve slightly different problems. IBP allows each customer to be assigned to multiple features (dishes), while
+Both IBP and CRP model latent features and allow for infinite features but solve slightly different problems. CRP solves the clustering problem and IBP solves feature allocation problem. IBP allows each customer to be assigned to multiple features (dishes), while
 CRP assigns each customer to a single feature (table). Figure \ref{fig:CRP} and \ref{fig:IBP}, from Gershman and Blei (2012) [4], diagramatically portray the difference between the two processes. Clearly, IBP solves a much wider problem in that it allows an object to have multiple features.
-
-\begin{figure}
-\includegraphics[width=\linewidth]{CRP.png}
-\caption {Chinese Restaurant Process}
-\label{fig:CRP}
-\end{figure}
 
 \begin{figure}
 \includegraphics[width=\linewidth]{IBP.png}
@@ -300,9 +299,16 @@ CRP assigns each customer to a single feature (table). Figure \ref{fig:CRP} and 
 \label{fig:IBP}
 \end{figure}
 
-\section{Conclusion}
+\begin{figure}
+\includegraphics[width=\linewidth]{CRP.png}
+\caption {Chinese Restaurant Process}
+\label{fig:CRP}
+\end{figure}
 
 \newpage
+\section{Conclusion}
+We derived and tested an Infinite Linear-Gaussian Binary Latent Feature model, using IBP as the prior, to detect the underlying features in a noisy image dataset. We validated our results by detecting the same features that were used to simulate the images. The basic code was written in Python, which was then optimized by removing redundant calculations and code statements and vectorization. Cython, JIT and high performance computing tools were tested. Since the code is highly dependent on matrix calculations and our profiling showed that approximate matrix inversion proposed by Griffiths and Ghahramani [1] was faster than full rank matrix inverse, future work would involve obtaining a stable Markov Chain with this approximate inverse technique.
+
 \begin{thebibliography}{9}
 
 \bibitem{lampor}
@@ -326,7 +332,13 @@ CRP assigns each customer to a single feature (table). Figure \ref{fig:CRP} and 
   \emph{A Tutorial on Bayesian Nonparametric Models},
   Journal of Mathematical Psychology, 
   2012.
-
+  
+\bibitem{lamprror}
+  Ilker Yildirim and Robert A Jacobs,
+  \emph{A Bayesian Nonparametric Approach to Multisensory Perception},
+  The Cognitive Science society, 
+  2010.
+  
 \end{thebibliography}
 
 

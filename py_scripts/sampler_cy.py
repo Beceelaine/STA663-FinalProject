@@ -5,6 +5,7 @@ import math
 from cython_functions import sampleIBP, likelihood
 
 def sampler_cy(X, E, BURN_IN, SAMPLE_SIZE, sigma_A, sigma_X, alpha, object_dim, num_objects):
+    """cythonized sampler"""
     HN=0.0
     for i in range(1,num_objects+1): 
         HN=HN+1.0/i
@@ -23,7 +24,7 @@ def sampler_cy(X, E, BURN_IN, SAMPLE_SIZE, sigma_A, sigma_X, alpha, object_dim, 
     chain_alpha=np.zeros((SAMPLE_SIZE,1))
     
     P=np.array([0,0])
-    
+    #gibbs
     s_counter=0
     for e in range(E):
         print e, K_plus, alpha
@@ -78,6 +79,8 @@ def sampler_cy(X, E, BURN_IN, SAMPLE_SIZE, sigma_A, sigma_X, alpha, object_dim, 
             trun = trun/sum(trun)
             p = np.random.uniform(0,1,1)
             t = 0
+            
+            #new dishes
             for k_i in range(5):
                 t = t+trun[k_i]
                 if p<t:
@@ -93,7 +96,7 @@ def sampler_cy(X, E, BURN_IN, SAMPLE_SIZE, sigma_A, sigma_X, alpha, object_dim, 
 
             Z=Ztemp
             K_plus = K_plus + new_dishes
-
+        #metropolis 
         l_curr=likelihood(X, Z[:,0:(K_plus+new_dishes)], sigma_A, sigma_X, K_plus+new_dishes, num_objects, object_dim)
         if np.random.uniform(0,1,1)<.5:
             pr_sigma_X=sigma_X-np.random.uniform(0,1,1)/20

@@ -10,9 +10,10 @@ from sampler_cy import sampler_cy
 import os
 
 np.random.seed(1)
-
+#saving data
 X=np.genfromtxt("data_files/X_orig.csv", delimiter=",")
 
+#defining parameters
 E=1000 #change to 1000
 BURN_IN=0
 SAMPLE_SIZE=E-BURN_IN
@@ -23,17 +24,19 @@ sigma_A=1.
 sigma_X=1.
 alpha=1.
 
-t0 = time.time()
-chain_Z, chain_K, chain_sigma_A, chain_sigma_X, chain_alpha, Z=sampler_old(X, E, BURN_IN, SAMPLE_SIZE, sigma_A, sigma_X, alpha, object_dim, num_objects)
-t1 = time.time()
-total_old=t1-t0
-
 np.random.seed(1)
-
+#timing all 3 sampler versions
 t0 = time.time()
 chain_Z, chain_K, chain_sigma_A, chain_sigma_X, chain_alpha, Z=sampler(X, E, BURN_IN, SAMPLE_SIZE, sigma_A, sigma_X, alpha, object_dim, num_objects)
 t1 = time.time()
 total_new=t1-t0
+
+np.random.seed(1)
+
+t0 = time.time()
+chain_Z, chain_K, chain_sigma_A, chain_sigma_X, chain_alpha, Z=sampler_old(X, E, BURN_IN, SAMPLE_SIZE, sigma_A, sigma_X, alpha, object_dim, num_objects)
+t1 = time.time()
+total_old=t1-t0
 
 np.random.seed(1)
 
@@ -45,6 +48,7 @@ total_cy=t1-t0
 time=np.array((total_old,total_new,total_cy))
 print time
 
+#making tables
 index=['Naive','Optimized','Cythonized']
 columns=['Time (in secs)']
 

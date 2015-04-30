@@ -7,7 +7,10 @@ from likelihood_old import likelihood_old
 
 np.random.seed(1)
 
+#old sampler with redundancy
+#gibbs and MH
 def sampler_old(X, E, BURN_IN, SAMPLE_SIZE, sigma_A, sigma_X, alpha, object_dim, num_objects):
+    """Gibbs and MH combined sampler"""
     HN=0.0
     for i in range(1,num_objects+1): 
         HN=HN+1.0/i
@@ -86,6 +89,8 @@ def sampler_old(X, E, BURN_IN, SAMPLE_SIZE, sigma_A, sigma_X, alpha, object_dim,
             trun = trun/sum(trun)
             p = np.random.uniform(0,1,1)
             t = 0
+            
+            #sample new dishes
             for k_i in range(5):
                 t = t+trun[k_i]
                 if p<t:
@@ -101,7 +106,8 @@ def sampler_old(X, E, BURN_IN, SAMPLE_SIZE, sigma_A, sigma_X, alpha, object_dim,
 
             Z=Ztemp
             K_plus = K_plus + new_dishes
-
+        
+        #Metropolis
         M=np.linalg.inv((np.dot(Z[:,0:K_plus+new_dishes].T,Z[:,0:K_plus+new_dishes]) + np.dot(((sigma_X)**2/(sigma_A)**2),np.eye(K_plus+new_dishes))))
         l_curr=likelihood_old(X, Z[:,0:(K_plus+new_dishes)], M, sigma_A, sigma_X, K_plus+new_dishes, num_objects, object_dim)
         if np.random.uniform(0,1,1)<.5:

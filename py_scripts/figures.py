@@ -8,9 +8,11 @@ import os
 from matplotlib import rcParams
 rcParams.update({'figure.autolayout': True})
 
+#checking if folder exists
 if not os.path.exists('data_files'):
     os.makedirs('data_files')
-    
+
+#obtaining histograms
 chain_Z=np.load('data_files/chain_Z.npy')
 chain_K=np.load('data_files/chain_K.npy')
 chain_sigma_X=np.load('data_files/chain_sigma_X.npy')
@@ -30,6 +32,7 @@ plt.savefig('data_files/figures.png')
 
 A=np.genfromtxt("data_files/A_orig.csv", delimiter=",")
 
+#obtaining feature images
 plt.figure(num=None, figsize=(12,3), dpi=80, facecolor='w', edgecolor='k')
 plt.subplot(141)
 plt.pcolormesh(A[0,:].reshape(6,6),cmap=plt.cm.gray)     
@@ -44,6 +47,7 @@ plt.savefig('data_files/features.png')
 Z=Z[:,0:4]
 X=np.genfromtxt("data_files/X_orig.csv", delimiter=",")
 
+#obtaining data images
 plt.figure(num=None, figsize=(12,3), dpi=80, facecolor='w', edgecolor='k')
 plt.subplot(141)
 plt.pcolormesh(X[0,:].reshape(6,6),cmap=plt.cm.gray)     
@@ -57,6 +61,7 @@ plt.savefig('data_files/data.png')
 
 A_inf=np.dot(np.dot(np.linalg.inv((np.dot(Z.T,Z)+(chain_sigma_X[999]**2/chain_sigma_A[999]**2)*np.eye(4))),Z.T),X)
 
+#obtaining detected features images
 plt.figure(num=None, figsize=(12,3), dpi=80, facecolor='w', edgecolor='k')
 plt.subplot(141)
 plt.pcolormesh(A_inf[0,:].reshape(6,6),cmap=plt.cm.gray)     
@@ -82,7 +87,8 @@ X=np.zeros((num_objects,object_dim))
 
 for i in range(num_objects):
     X[i,:]=np.dot(Z_final[i,:],A_inf[0:4,])
-    
+
+#obtaining reconstructed images
 plt.figure(num=None, figsize=(12,3), dpi=80, facecolor='w', edgecolor='k')
 plt.subplot(141)
 plt.pcolormesh(X[0,:].reshape(6,6),cmap=plt.cm.gray)
@@ -109,6 +115,7 @@ text_file = open("data_files/table_features.tex", "w")
 text_file.write(tab)
 text_file.close()
 
+#making trace plots
 plt.figure(num=None, figsize=(10,8), dpi=80, facecolor='w', edgecolor='k')
 plt.subplot(411)
 plt.plot(chain_K,color='black')

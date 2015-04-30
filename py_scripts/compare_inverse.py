@@ -4,7 +4,8 @@ import pandas as pd
 from functions import calcInverse, sampleIBP
 import os
 np.random.seed(1)
- 
+
+#load data
 X=np.genfromtxt("data_files/X_orig.csv", delimiter=",")
 
 object_dim=X.shape[1]
@@ -16,7 +17,8 @@ alpha=1.
 
 i=12
 k=3
- 
+
+#IBP prior
 sam=sampleIBP(alpha,num_objects)
 Z=sam[0]
 K_plus=sam[1]
@@ -25,6 +27,7 @@ M = np.linalg.inv(Z.T.dot(Z)+(sigma_X**2/sigma_A**2)*np.identity(K_plus))
 Z[i,k] = 1
 val = 0
 
+#timing matrix inversion
 t0=time.time()
 for l in range(1000):
     calcInverse(Z,M,i,k,val)

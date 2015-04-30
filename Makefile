@@ -1,7 +1,7 @@
-final_report.pdf: final_report.tex profiling.txt matlab_profile.png IBP.png CRP.png likelihood.tex data_files/inversetimes.tex data_files/times_like.tex data_files/times.tex data_files/features.png data_files/data.png data_files/detected_features.png data_files/detected_total_features.png data_files/table_features.tex data_files/trace_plots.png data_files/figures.png
-	pdflatex final_report
-	pdflatex final_report
-	pdflatex final_report
+STA663_FinalReport_RadhikaAnand.pdf: STA663_FinalReport_RadhikaAnand.tex profiling.txt matlab_profile.png IBP.png CRP.png data_files/inversetimes.tex data_files/times_like.tex data_files/times.tex data_files/features.png data_files/data.png data_files/detected_features.png data_files/detected_total_features.png data_files/table_features.tex data_files/trace_plots.png data_files/figures.png
+	pdflatex STA663_FinalReport_RadhikaAnand
+	pdflatex STA663_FinalReport_RadhikaAnand
+	pdflatex STA663_FinalReport_RadhikaAnand
     
 data_files/times.tex: py_scripts/main.py data_files/X_orig.csv py_scripts/cython_functions.so
 	python py_scripts/main.py
@@ -24,4 +24,4 @@ data_files/chain_Z.npy data_files/chain_K.npy data_files/chain_sigma_X.npy data_
 py_scripts/cython_functions.so:
 	cd py_scripts ; python cython_setup.py build_ext --inplace; cd ..
 
-all: final_report.pdf
+all: STA663_FinalReport_RadhikaAnand.pdf

@@ -18,6 +18,7 @@ sigma_A=1.
 sigma_X=1.
 alpha=1.
 
+#running the sampler and obtaining posteriors
 np.random.seed(1)
 chain_Z, chain_K, chain_sigma_A, chain_sigma_X, chain_alpha, Z=sampler(X, E, BURN_IN, SAMPLE_SIZE, sigma_A, sigma_X, alpha, object_dim, num_objects)
 

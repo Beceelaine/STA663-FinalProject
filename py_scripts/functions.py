@@ -5,7 +5,9 @@ import math
 
 np.random.seed(1)
 
+#IBP function
 def sampleIBP(alpha, num_objects):
+    """generates the IBP prior"""
     result=np.zeros((num_objects, 1000))
     t=np.random.poisson(alpha)
     result[0,0:t]=np.ones(t)
@@ -27,7 +29,9 @@ def sampleIBP(alpha, num_objects):
     result=result[:,0:K_plus]
     return(result,K_plus)     
 
+#calcinverse proposed by Griffiths
 def calcInverse(Zn,M,i,k,val):
+    """calculates inverse based on Griffiths and Ghahramani approximation"""
     M_i = M-np.dot(np.dot(np.dot(M,Zn[i,:].T),Zn[i,:]),M)/(np.dot(np.dot(Zn[i,:],M),Zn[i,:].T)-1)
     Zn[i,k] = val
     M = M_i-np.dot(np.dot(np.dot(M_i,Zn[i,:].T),Zn[i,:]),M_i)/(np.dot(np.dot(Zn[i,:],M_i),Zn[i,:].T)+1)
