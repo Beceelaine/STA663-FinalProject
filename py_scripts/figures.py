@@ -5,6 +5,8 @@ import matplotlib.cm as cm
 import pandas as pd
 plt.style.use('ggplot')
 import os
+from matplotlib import rcParams
+rcParams.update({'figure.autolayout': True})
 
 if not os.path.exists('data_files'):
     os.makedirs('data_files')
@@ -18,10 +20,12 @@ Z=np.load('data_files/Z.npy')
 
 plt.figure(num=None, figsize=(12,3), dpi=80, facecolor='w', edgecolor='k')
 plt.subplot(121)
-plt.hist(chain_K[200:],bins=range(12),normed=True)
+plt.hist(chain_K[200:],bins=range(12),normed=True,color='black')
+plt.xlabel('(a) Posterior distribution of K')
 m=np.mean(chain_Z, axis=0)
 plt.subplot(122)
-plt.hist(np.ceil(np.sum(m,axis=1)),bins=range(10),normed=True)
+plt.hist(np.ceil(np.sum(m,axis=1)),bins=range(10),normed=True,color='black')
+plt.xlabel('(b) Features (ordered by frequency of occurence)')
 plt.savefig('data_files/figures.png')
 
 A=np.genfromtxt("data_files/A_orig.csv", delimiter=",")
@@ -105,11 +109,17 @@ text_file = open("data_files/table_features.tex", "w")
 text_file.write(tab)
 text_file.close()
 
-plt.figure(num=None, figsize=(12,3), dpi=80, facecolor='w', edgecolor='k')
-plt.subplot(131)
-plt.plot(chain_alpha)
-plt.subplot(132)
-plt.plot(chain_sigma_X)
-plt.subplot(133)
-plt.plot(chain_sigma_X)
+plt.figure(num=None, figsize=(10,8), dpi=80, facecolor='w', edgecolor='k')
+plt.subplot(411)
+plt.plot(chain_K,color='black')
+plt.ylabel('K')
+plt.subplot(412)
+plt.plot(chain_alpha,color='black')
+plt.ylabel('alpha')
+plt.subplot(413)
+plt.plot(chain_sigma_X,color='black')
+plt.ylabel('sigmaX')
+plt.subplot(414)
+plt.plot(chain_sigma_A,color='black')
+plt.ylabel('sigmaA')
 plt.savefig('data_files/trace_plots.png')

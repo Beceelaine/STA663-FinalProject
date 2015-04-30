@@ -29,16 +29,18 @@ M1=np.linalg.inv((np.dot(Z[:,0:K_plus].T,Z[:,0:K_plus]) + np.dot(((sigma_X)**2/(
 M2=np.linalg.inv((np.dot(Z[:,0:K_plus].T,Z[:,0:K_plus]) + np.dot(((sigma_X)**2/(sigma_A)**2),np.eye(K_plus))))
 M=np.linalg.inv((np.dot(Z[:,0:K_plus].T,Z[:,0:K_plus]) + np.dot(((sigma_X)**2/(sigma_A)**2),np.eye(K_plus))))
 
-start = timeit.default_timer()
+t0=time.time()
 for i in range(1000):
     likelihood(X, Z[:,0:K_plus], sigma_A, sigma_X, K_plus, num_objects, object_dim)
-elapsed1 = timeit.default_timer() - start
+t1=time.time()
+elapsed1=t1-t0
 
-start = timeit.default_timer()
+t0=time.time()
 for i in range(1000):
     M1=np.linalg.inv((np.dot(Z[:,0:K_plus].T,Z[:,0:K_plus]) + np.dot(((sigma_X)**2/(sigma_A)**2),np.eye(K_plus))))
     likelihood_old(X, Z[:,0:K_plus], M1, sigma_A, sigma_X, K_plus, num_objects, object_dim)
-elapsed2 = timeit.default_timer() - start
+t1=time.time()
+elapsed2=t1-t0
 
 elap=np.array((elapsed1,elapsed2))
 print elap

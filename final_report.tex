@@ -1,5 +1,5 @@
 \documentclass[11pt]{article}
-\usepackage[letterpaper, scale=0.85]{geometry}
+\usepackage[letterpaper, scale=0.75]{geometry}
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{enumerate}
@@ -17,7 +17,7 @@
  framesep=2em, % separation between frame and text
  rulecolor=\color{Gray},
  %
- label=\fbox{\color{Black}data.txt},
+ label=\fbox{\color{Black}Profiler Results},
  labelposition=topline,
  %
  commandchars=\|\(\), % escape character and argument delimiters for
@@ -29,11 +29,11 @@
 \begin{document}
 
 \author{Radhika Anand}
-\title{STA663 \\Infinite Latent Feature Models and the Indian Buffet Process}
+\title{STA663: Final Project \\Infinite Latent Feature Models and the Indian Buffet Process}
 \date{\today}
 \maketitle
 
-\section{Outline}
+\section{Background}
 \subsection{Definition of the Indian Buffet Process}
 
 In the Indian buffet process, N customers enter a restaurant one after another. Each customer encounters a buffet consisting of infinitely many dishes arranged in a line. The first customer starts at the left of the buffet and takes a serving from each dish, stopping after a Poisson($\alpha$) number of dishes. The ith customer moves along the buffet, sampling dishes in proportion to their popularity, taking dish k with probability $mk/i$ , where mk is the number of previous customers who have sampled that dish. Having reached the end of all previous sampled dishes, the ith customer then tries a Poisson($\alpha$/$i$) number of new dishes.
@@ -51,8 +51,33 @@ In the Indian buffet process, N customers enter a restaurant one after another. 
 
 5) We start with a finite realization and then take the infinite limit\\
 
-\section{Algorithm}
-1) We use Gamma prior for $\alpha$
+\section{Implementation}
+We illustrate how IBP can be used as a prior in models for unsupervised learning by deriving and testing an infinite Gaussian binary latent feature model, presented in Griffiths and Ghahramani (2005) [1] with further implementation in Yildirim (2012) [3].
+
+\subsection{Infinite Linear-Gaussian Binary Latent Feature Model} 
+In this model, we consider a binary feature ownership matrix Z which illustrates the presence or absence of underlying features in the objects X. The D-dimensional vector of properties of an object i, $x_{i}$ is generated as $x_{i} \sim N(z_{i}A, \Sigma_{X})$, where A is a KxD matrix of weights, K represents the underlying latent features and $\Sigma_{X}=\sigma_{x}^2I$ introduces the white noise.
+
+\subsection{Algorithm}
+We use a combination of Gibbs Sampling and Metropolis Hastings to update the parameters of interest, which are:
+
+\begin{itemize}
+  \item Z - Feature ownership matrix
+  \item $K_{newdishes}$ - New dishes/features sampled
+  \item $\alpha$ - Poisson parameter
+  \item $\sigma_{X}$ - Parameter for X
+  \item $\sigma_{A}$ - Parameter for weight matrix A
+\end{itemize}
+
+\subsubsection{Likelihood}
+The likelihood is given by (integrating out A):
+\begin{multline*}
+P(X|Z,\sigma_X, \sigma_A) = \frac{1}{(2 \pi)^{ND/2} (\sigma_X)^{(N-K)D}(\sigma_A)^{KD}(|Z^TZ+\frac{\sigma_X^2}{\sigma_A^2}I|)^{D/2}}\\
+exp\{-\frac{1}{2\sigma_X^2}tr(X^T(I-Z(Z^TZ+\frac{\sigma_X^2}{\sigma_A^2}I)^{-1}Z^T)X)\}
+\end{multline*}
+
+\subsubsection{Gibbs Sampler}
+
+1) Gamma prior is used for $\alpha$
 $$
 \alpha \sim Gamma(1,1)
 $$\\
@@ -64,61 +89,165 @@ $$
 where ${z}_{-i,k}$ is the set of assignments of other objects, not including i, for feature k, and
 ${m}_{-i,k}$ is the number of objects possessing feature k, not including i.\\
 
-3) Likelihood is given by
-\begin{equation}
-P(X|Z,\sigma_X,A) = \frac{1}{(2 \pi \sigma_x^2)^{ND/2}}exp(-\frac{1}{2\sigma_X^2}tr((X-ZA)^T(X-ZA)))
-\end{equation}
-where Z is the binary feature matrix and A is the weight matrix. $\sigma_X$ and $\sigma_A$ are the respective noise terms.
-Next, we integrate out A to get $P(X|Z,\sigma_X,\sigma_A)$.\\
+3) The prior on number of features is given by $Poisson(\frac{\alpha}{N})$\\
 
-4) Using this likelihood and the prior given by IBP, full conditional posterior for Z can be calculated as:
+4) Using the likelihood above and the prior given by IBP, full conditional posterior for Z can be calculated as:
 $$
 P(z_{ik}|X,Z_{-(i,k)},\sigma_X,\sigma_A) \propto  P(X|Z,\sigma_X,\sigma_A) * P(z_{ik}=1|\textbf{z}_{-i,k})
 $$\\
-
-5) Now, to sample the number of new features for observation $i$, we use a truncated distribution, computing probabilities for a range of values $K_1^{(i)}$ up to an upper bound. The prior on number of features is given by $Poisson(\frac{\alpha}{N})$.
-Using this prior and the likelihood, we sample the number of new features.\\
+5) To sample the number of new features, $K_{newdishes}$, for observation $i$, we use a truncated distribution, computing probabilities for a range of $K_{newdishes}^{(i)}$ up to an upper bound.\\
 
 6) Conditional posterior for $\alpha$ is given by:
 $$
-P(\alpha|Z) \sim Gamma(1+K_+,1+\sum_{i=1}^{N} H_i)
+P(\alpha|Z) \sim Gamma(1+K_+, 1+H_N)
 $$
-where $H_N$ is the Nth harmonic number given by $H_N=\sum_{j=1}^{N} 1/j$\\
+where $H_N$ is the Nth harmonic number given by $H_N=\sum_{j=1}^{N} 1/j$ and $K_{+}$ is the current number of features.
 
-7) We now run the Gibbs Sampler using these full conditionals\\
+\subsubsection{Metropolis Hastings}
 
-8) To update $\sigma_X$ and $\sigma_A$, we use MH algorithm as follows:
-\begin{eqnarray}
+1) To update $\sigma_X$ and $\sigma_A$, we use MH algorithm as follows:
+\begin{eqnarray*}
 \epsilon \sim Uniform(-.05,.05)\\
 \sigma_X^{*} =  \sigma_X +\epsilon\\
-\sigma_A^{*} =  \sigma_X +\epsilon\\
-\end{eqnarray}
+\sigma_A^{*} =  \sigma_A +\epsilon\\
+\end{eqnarray*}
+
+Accept this new $\sigma_X^{*}$ with acceptance probability:
+\begin{equation*}
+AP = min\{1,\frac{P(X|Z, \sigma_X^{*}, \sigma_A)}{P(X|Z, \sigma_X,\sigma_A)}\}\\
+\end{equation*}
+Similarly for $\sigma_A^{*}$.
+
+\section{Profiling and Optimization}
+We profiled the basic version of the code to find the functions or parts of code taking significant amounts of time. The results of the profiler are shown below. We clearly see that the functions; sampler, likelihood and inverse take the maximum amount of time.\\
 
 \VerbatimInput{profiling.txt}
 
+\subsection{Optimizing Matrix Inverse}
+We began by optimizing the matrix inverse function. We used the inverse method descibed in Griffiths and Ghahramani (2005) [1], eqns. 51-54, to code an inverse function which involved only rank 1 updates instead of full rank updates. We can see in Table \ref{inversetimes} that this \textit{calcInverse} takes nearly half the time taken by the \textit{linalg.inv} function in python (tested for 1000 iterations). But while running this in our code we could not obtain a stable Markov Chain since this inverse is just a numerical approximation and accumulates numerical errors on the way. We, hence, used the basic python function itself.\\
+
 \begin{table}[ht]
 \centering
-\caption{Times for likelihood function \label{time_like}}
+\caption{Runtimes for inverse functions (for 1000 loops) \label{inversetimes}}
+\input{data_files/inversetimes}
+\end{table}
+
+\subsection{Optimizing Likelihood Function and the Sampler}
+In the basic version of the code, we had a few redundant calculations in the likelihood function. We calculated the inverse of $Z^TZ+\frac{\sigma_X^2}{\sigma_A^2}I$ matrix in the sampler each time before sending it to the likelihood function. Then in the likelihood function we have determinant of this same matrix, $Z^TZ+\frac{\sigma_X^2}{\sigma_A^2}I$. To get rid of the redundancy, we remove all inverse calculations outside the likelihood function and instead just calculate $Z^TZ+\frac{\sigma_X^2}{\sigma_A^2}I$ once in the likelihood function and then take its inverse and determinant. This reduced the time taken by the likelihood function by about half as can be seen in Table \ref{time_likeli} and Table \ref{time_like}.\\
+
+Next, we vectorized a basic loop inside the sampler and got rid of redundant if-else statements. Thereafter, we could not find scope for more vectorization or basic optimization.\\
+
+Finally, Table \ref{time} shows the total runtimes for 1000 iterations of the sampler. We see that there is a significant decrease in the time taken by the optimized version compared to the naive one.
+
+\begin{table}[ht]
+\centering
+\caption{Runtimes for likelihood function (for 1000 loops) \label{time_likeli}}
+\input{likelihood}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Runtimes for likelihood function (for 1000 loops) \label{time_like}}
 \input{data_files/times_like}
 \end{table}
 
+\subsection{Cythonizing}
+To further optimize the code, we cythonized the optimized likelihood function. From Table \ref{time}, we see that the optimization gain by cythonizing is not much.
+
 \begin{table}[ht]
 \centering
-\caption{Times \label{time}}
+\caption{Total runtimes \label{time}}
 \input{data_files/times}
 \end{table}
 
+\section{High Performance Computing}
+We tried multicore programming and GPU programming to further reduce the total run times.
+
+\subsection{Multicore Programming}
+The MCMC sampler is serially dependent in its iterations and hence it is not the best idea to parallelize it. But we saw that the sampler stabilized in around 200 iterations and hence instead of running 1000 iterations on the same core we ran 2 chains of 500 each on 2 cores. The combined samples (after burn-in on each core) would not satisfy the Markov property in the theoretical sense of it but would still help us approximate the posterior distributions correctly since both the chains were stable. This reduced the run-time slightly but not significantly, as we also had to take care of multiple burn-ins and multicore overhead. Further, splitting a single chain likelihood calculation into multiple cores is not an option for us since we are calculating the density only at 2 discrete points. 
+
+\subsection{GPU Programming}
+Next we looked at using CuBLAS library from the CUDA package to optimize the matrix multiplications but since we are working with relatively small matrices the overhead was very large and the basic matrix multiplication function \textit{np.dot} was found to be faster than CuBLAS matrix multiplication.\\
+
+Thus, we use the optimized likelihood and sampler described in Section 3.2 as the final version.
+
+\section{Unit Testing}
+We create several unit tests (refer unit\_tests.py file) to test the various functions we have used in the code. All the tests pass. They are:\\
+
+1) Test the calcInverse function and see if it is almost equal to the inverse obtained by using np.linalg.inv. We see that sometimes it is very close (upto default 7 decimal places) and sometimes it isn't (i.e. it is equal to around 2 decimal places and is thus a numerical approximation as described in Section 3.1).\\
+
+2) Test if the posterior mean of the parameters $\alpha$ and $\sigma_{X}$ are equal to their true values\\
+
+3) Test if the likelihood is positive\\
+
+4) Test if the likelihood throws an error if we pass a parameter that causes division by zero\\
+
+5) Test if the likelihood throws an error if we pass negative values for parameters $\sigma_{X}$ and $\sigma_{A}$, as they have to be positive\\
+
+6) Test if each object sampled atleast one feature 
+
+\section{Application and Results}
+We simulate a basic dataset and present and validate our results below.
+
+\subsection{Data Simulation}
+We simulate an image dataset to test our code. The data is similar to that used in Griffiths and Ghahramani (2005) [1]. The data is as follows:
+\begin{itemize}
+  \item N = 100 is the number of images (customers in IBP or objects in general)
+  \item D = 6x6 (image dimension) = 36 is the length of vectors (dishes or features) for each image
+  \item K = 4 is the number of basis images (or latent variables)
+  \item X represents the final images generated using the K basis images (each basis is present with 0.5 probability) and added white noise
+\end{itemize}
+
+Thus we simulate 100, 6x6 images represented as a 100*36 matrix where each image/object has a D-dimensional vector of properties, $x_{i}$:
+
+\begin{itemize}
+  \item $x_{i} \sim N(z_{i}A,\sigma_X^2I)$
+  \item $z_{i}$ is a K-dimensional binary vector (for presence or absence of features)
+  \item A is a KxD matrix of weights
+\end{itemize}
+
+Figure \ref{fig:feat} shows the 4 features (basis images) used to generate our simlated data and Figure \ref{fig:dataaa} shows first four of the 100 simulated images which have one or more of the features and added noise. 
+
 \begin{figure}
 \includegraphics[width=\linewidth]{data_files/features.png}
-\caption {Main features used to simulate data}
+\caption {Features/basis images used to simulate data}
 \label{fig:feat}
 \end{figure}
 
 \begin{figure}
 \includegraphics[width=\linewidth]{data_files/data.png}
-\caption {Simulated data}
-\label{fig:data}
+\caption {Simulated data (first four of 100 images)}
+\label{fig:dataaa}
 \end{figure}
+
+\subsection{Results}
+We ran our code for 1000 iterations of the sampler to get convergence to the true values, for K, $\alpha$, $\sigma_{X}$ and $\sigma_{A}$ as can be seen in the trace plots in Figure \ref{fig:darr}.
+
+\begin{figure}
+\includegraphics[width=\linewidth]{data_files/trace_plots.png}
+\caption {Trace plots for K, alpha, sigma X and sigma A}
+\label{fig:darr}
+\end{figure}
+
+\subsubsection{Detection of total number of latent features}
+In Figure \ref{fig:figur} (a), we see that the mode of K is around six because the samples tended to include the four features used by a large number of images/objects and then a few features used by one one or two objects (which came in the form of added noise). Figure \ref{fig:figur} (b) shows the mean frequency with which objects tended to possess the features. We clearly see that most of the objects possessed only features 1, 2, 3 and 4. The extra features (5, 6 etc.) are possesed by very few objects which confirms that they are because of noise and not actual features.\\
+
+We, thus, conclude the posterior of K to be 4, i.e. our code detected 4 latent features to be present in the data, which is as we would expect because we used 4 features to simulate the data in the beginning.
+
+\begin{figure}
+\includegraphics[width=\linewidth]{data_files/figures.png}
+\caption {Histograms. (a) Posterior of K (b) Features (ordered by frequency of occurence)}
+\label{fig:figur}
+\end{figure}
+
+\subsubsection{Detection of latent features present in each object and Object Reconstruction}
+Figure \ref{fig:dat} shows the four most frequent features after the 1000 iterations of the sampler. We see that these features are the same as the features used to simulate the data as in Figure \ref{fig:feat}. They are just re-ordered.\\
+
+Next, we recontruct the images using $X_{i} \sim N(Z_{i}A,0)$, where the posterior mean of the feature weights A, given X and posterior means of Z, $\sigma_{A}$ and $\sigma_{X}$ is:
+\[
+E[A|X,Z] = (Z^TZ+\frac{\sigma_X^2}{\sigma_A^2}I)^{-1}Z^TX
+\]
+Figure \ref{fig:da} shows the posterior means of the reconstructions of the four original data images as in Figure \ref{fig:dataaa}. The reconstructions provided by the model in Figure \ref{fig:da} clearly pick out the relevant features present in each image, despite the high level of noise as seen in Figure \ref{fig:dataaa}.\\
 
 \begin{figure}
 \includegraphics[width=\linewidth]{data_files/detected_features.png}
@@ -128,21 +257,78 @@ where $H_N$ is the Nth harmonic number given by $H_N=\sum_{j=1}^{N} 1/j$\\
 
 \begin{figure}
 \includegraphics[width=\linewidth]{data_files/detected_total_features.png}
-\caption {Features possesed by each image in the data}
+\caption {Reconstructed images}
 \label{fig:da}
 \end{figure}
+
+\subsubsection{Validation}
+To check the validity, Table \ref{featu} shows the features initially present (used to simulate) in the first four simulated images, where F1, F2, F3 and F4 refer to the order of features in Figure \ref{fig:feat}. We clearly see that the reconstructed images, as in Figure \ref{fig:da}, pick exactly the same features. The first reconstructed image (refer Figure \ref{fig:da}) picks feature 2, the 2nd picks 1 and 2, 3rd picks 1, 2 and 4 and 4th again picks 1 and 2 (feature numbering is as in Figure \ref{fig:feat}). This result shows that reconstructed images picked exactly the same features as were used to simulate them (Table \ref{featu}). This validates our model. 
 
 \begin{table}[ht]
 \centering
-\caption{Presence of original features \label{featu}}
+\caption{Presence/absence of latent features in the simulated data. 1 denotes presence, 0 denotes absence. F1, F2, F3, F4 refer to the 4 features as in Figure \ref{fig:feat} \label{featu}}
 \input{data_files/table_features}
 \end{table}
 
+\section{Comparison}
+We compare our algorithm with an implementation of the same algorithm in MATLAB. We also contrast our algorithm to another similar problem called Chinese Restaurant Process.
+
+\subsection{Comparison with MATLAB implementation}
+We compare our code and results to the MATLAB implementation of Indian Buffet Process provided by Yildirim [3]. The dataset he uses is the same as the one we have used. We got exactly similar results in terms of the features detected (Figure \ref{fig:dat}) and the reconstructed images (Figure \ref{fig:da}). We then profiled his MATLAB code and got results as shown in Figure \ref{fig:matlab}. We can see that the time taken for 1000 iterations of the sampler in MATLAB is 410 seconds which is significantly larger than the time taken by our most optimized version i.e. 285 seconds (see Table \ref{time}). Therefore, even though we have a lot of matrix calculations and MATLAB is the suited platform to run matrix intensive codes, we are able to write a much more efficient code in Python.
+
 \begin{figure}
-\includegraphics[width=\linewidth]{data_files/trace_plots.png}
-\caption {Trace plots for alpha, original sigma X and original sigma alpha}
-\label{fig:da}
+\includegraphics[width=\linewidth]{matlab_profile.png}
+\caption {Profiling results of matlab code for IBP}
+\label{fig:matlab}
 \end{figure}
+
+\subsection{Comparison with Chinese Restaurant Process}
+Chinese Restaurant Process is an algorithm of customers’ seating in a Chinese Restaurant with infinite tables and infinite seats in each table. The customers enter one after the other and choose a table at random. In the CRP with parameter $\alpha$, each customer chooses an occupied table with probability proportional to the number of occupants and chooses the next vacant table with probability $\alpha$.\\
+
+Both IBP and CRP model latent features and allow for infinite features but solve slightly different problems. IBP allows each customer to be assigned to multiple features (dishes), while
+CRP assigns each customer to a single feature (table). Figure \ref{fig:CRP} and \ref{fig:IBP}, from Gershman and Blei (2012) [4], diagramatically portray the difference between the two processes. Clearly, IBP solves a much wider problem in that it allows an object to have multiple features.
+
+\begin{figure}
+\includegraphics[width=\linewidth]{CRP.png}
+\caption {Chinese Restaurant Process}
+\label{fig:CRP}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=\linewidth]{IBP.png}
+\caption {Indian Buffet Process}
+\label{fig:IBP}
+\end{figure}
+
+\section{Conclusion}
+
+\newpage
+\begin{thebibliography}{9}
+
+\bibitem{lampor}
+  Thomas Griffiths and Zoubin Ghahramani,
+  \emph{Infinite Latent Feature Models and the Indian Buffet Process},
+  Technical report, Gatsby Computational Neuroscience Unit, 
+  2005.
+  
+\bibitem{lampo94}
+  Thomas Griffiths and Zoubin Ghahramani,
+  \emph{Infinite Latent Feature Models and the Indian Buffet Process},
+  In Advances in Neural Information Processing Systems, volume 18. NIPS Proceedings,
+  2005.
+  
+\bibitem{lampor94}
+  Ilker Yildirim,
+  \emph{Bayesian Statistics: Indian Buffet Process}, homepage link (with sample code): http://www.mit.edu/~ilkery/
+  
+\bibitem{lampor}
+  Samuel J Gershman and David M Blei,
+  \emph{A Tutorial on Bayesian Nonparametric Models},
+  Journal of Mathematical Psychology, 
+  2012.
+
+\end{thebibliography}
+
 
 
 \end{document}

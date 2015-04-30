@@ -1,22 +1,61 @@
 \relax 
-\@writefile{toc}{\contentsline {section}{\numberline {1}Outline}{1}}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Background}{1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Definition of the Indian Buffet Process}{1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Steps}{1}}
-\@writefile{toc}{\contentsline {section}{\numberline {2}Algorithm}{1}}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Times for likelihood function \relax }}{4}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Implementation}{2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Infinite Linear-Gaussian Binary Latent Feature Model}{2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Algorithm}{2}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.1}Likelihood}{2}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.2}Gibbs Sampler}{2}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.3}Metropolis Hastings}{3}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Profiling and Optimization}{3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Optimizing Matrix Inverse}{5}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Runtimes for inverse functions (for 1000 loops) \relax }}{5}}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{time_like}{{1}{4}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Main features used to simulate data\relax }}{5}}
-\newlabel{fig:feat}{{1}{5}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Simulated data\relax }}{5}}
-\newlabel{fig:data}{{2}{5}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Features detected by code\relax }}{5}}
-\newlabel{fig:dat}{{3}{5}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Features possesed by each image in the data\relax }}{5}}
-\newlabel{fig:da}{{4}{5}}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Times \relax }}{6}}
-\newlabel{time}{{2}{6}}
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Presence of original features \relax }}{6}}
-\newlabel{featu}{{3}{6}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Trace plots for alpha, original sigma X and original sigma alpha\relax }}{6}}
-\newlabel{fig:da}{{5}{6}}
+\newlabel{inversetimes}{{1}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Optimizing Likelihood Function and the Sampler}{5}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Runtimes for likelihood function (for 1000 loops) \relax }}{5}}
+\newlabel{time_likeli}{{2}{5}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Runtimes for likelihood function (for 1000 loops) \relax }}{6}}
+\newlabel{time_like}{{3}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Cythonizing}{6}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Total runtimes \relax }}{6}}
+\newlabel{time}{{4}{6}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}High Performance Computing}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Multicore Programming}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}GPU Programming}{6}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Unit Testing}{7}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Application and Results}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Data Simulation}{7}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Features/basis images used to simulate data\relax }}{8}}
+\newlabel{fig:feat}{{1}{8}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Simulated data (first four of 100 images)\relax }}{8}}
+\newlabel{fig:dataaa}{{2}{8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Results}{8}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.1}Detection of total number of latent features}{8}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Trace plots for K, alpha, sigma X and sigma A\relax }}{9}}
+\newlabel{fig:darr}{{3}{9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Histograms. (a) Posterior of K (b) Features (ordered by frequency of occurence)\relax }}{9}}
+\newlabel{fig:figur}{{4}{9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Features detected by code\relax }}{10}}
+\newlabel{fig:dat}{{5}{10}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Reconstructed images\relax }}{10}}
+\newlabel{fig:da}{{6}{10}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.2}Detection of latent features present in each object and Object Reconstruction}{10}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.3}Validation}{10}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Presence/absence of latent features in the simulated data. 1 denotes presence, 0 denotes absence. F1, F2, F3, F4 refer to the 4 features as in Figure 1\hbox {} \relax }}{11}}
+\newlabel{featu}{{5}{11}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Comparison}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Comparison with MATLAB implementation}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Comparison with Chinese Restaurant Process}{11}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Profiling results of matlab code for IBP\relax }}{12}}
+\newlabel{fig:matlab}{{7}{12}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Chinese Restaurant Process\relax }}{12}}
+\newlabel{fig:CRP}{{8}{12}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Indian Buffet Process\relax }}{13}}
+\newlabel{fig:IBP}{{9}{13}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Conclusion}{13}}
+\bibcite{lampor}{1}
+\bibcite{lampo94}{2}
+\bibcite{lampor94}{3}
+\bibcite{lampor}{4}

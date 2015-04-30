@@ -45,7 +45,7 @@ total_cy=t1-t0
 time=np.array((total_old,total_new,total_cy))
 print time
 
-index=['Naive','Optimized','Cython']
+index=['Naive','Optimized','Cythonized']
 columns=['Time (in secs)']
 
 if not os.path.exists('data_files'):
